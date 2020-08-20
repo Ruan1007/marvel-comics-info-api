@@ -2,7 +2,8 @@
  * Arquivo: src/services/image.model.js
  * Descrição: arquivo responsável pelo model de usuário.
  */
-const { mongoose, Schema } = require('mongoose');
+const mongoose = require('mongoose');
+const { Schema } = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const UserSchema = new Schema({

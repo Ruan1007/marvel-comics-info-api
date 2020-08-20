@@ -1,5 +1,6 @@
 const authService = require('../services/auth.service');
 const generateToken = require('../utils/Auth');
+const BadRequestError = require('../utils/HandleErrors/BadRequestError');
 
 exports.register = async (req, res) => {
   try {
@@ -20,7 +21,7 @@ exports.login = async (req, res) => {
     res.status(200).json({ user, token });
   } catch (err) {
     return res
-      .status(err.code)
+      .status(err.code ? err.code : 500)
       .send({ message: `Login falhou. ${err.message.message}` });
   }
 };

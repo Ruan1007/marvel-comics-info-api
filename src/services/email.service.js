@@ -35,7 +35,7 @@ module.exports = (toEmail, template, params = {}, subject) => {
     },
   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
+  transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       throw new Error(error);
     } else {

@@ -3,9 +3,14 @@
  * Descrição: arquivo responsável pelas regras de negócio do comics.
  */
 const Comic = require('../models/comic.model');
+const { getRatedComicsByUserId } = require('../controllers/comic.controller');
 
 const save = (comic) => {
-  return Comic.create({ comic });
+  return Comic.create({
+    userId: comic.userId,
+    isLiked: comic.isLiked,
+    url: comic.url,
+  });
 };
 
 const update = (comic) => {
@@ -30,5 +35,8 @@ module.exports = {
       return update(comic);
     }
     return save(comic);
+  },
+  getRatedComicsByUserId(userId) {
+    return Comic.find({ userId });
   },
 };

@@ -2,7 +2,8 @@
  * Arquivo: src/services/comic.model.js
  * Descrição: arquivo responsável pelo model de comics.
  */
-const { mongoose, Schema } = require('mongoose');
+const mongoose = require('mongoose');
+const { Schema } = require('mongoose');
 
 const ComicSchema = new Schema({
   userId: {

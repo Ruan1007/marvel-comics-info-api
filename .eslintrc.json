@@ -7,13 +7,14 @@
     },
     "extends": [
         "airbnb-base",
-        "prettier"
+        "eslint-config-prettier"
     ],
     "parserOptions": {
         "ecmaVersion": 11
     },
     "rules": {
         "prettier/prettier": "error",
-        "consistent-return": "off"
+        "consistent-return": "off",
+        "no-console": "off"
     }
 }
