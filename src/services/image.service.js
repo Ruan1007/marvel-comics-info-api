@@ -10,6 +10,10 @@ module.exports = {
   },
   async saveProfileImage(image, userId) {
     const {url} = await Image.create(image);
-    return await User.findOneAndUpdate({_id: userId}, {image: url});
+    return await User.findOneAndUpdate(
+      {_id: userId},
+      {image: url},
+      {new: true}
+    );
   }
 };
