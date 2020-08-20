@@ -1,42 +1,44 @@
-const mongoose = require('mongoose');
+/**
+ * Arquivo: src/services/image.model.js
+ * Descrição: arquivo responsável pelo model de usuário.
+ */
+const { mongoose, Schema } = require('mongoose');
 const bcrypt = require('bcryptjs');
-
-const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
     required: true,
-    select: false
+    select: false,
   },
   birthDate: {
     type: Date,
-    required: true
+    required: true,
   },
   image: {
-    type: String
+    type: String,
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-UserSchema.pre('save', async function (next) {
+UserSchema.pre('save', async (next) => {
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
   next();
 });
 
-UserSchema.pre('findOneAndUpdate', async function (next) {
+UserSchema.pre('findOneAndUpdate', async (next) => {
   if (this.getUpdate().newPassword) {
     const hash = await bcrypt.hash(this.getUpdate().newPassword, 10);
     this.getUpdate().password = hash;

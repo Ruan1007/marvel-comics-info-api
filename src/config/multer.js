@@ -3,6 +3,7 @@ const multerS3 = require('multer-s3');
 const path = require('path');
 const crypto = require('crypto');
 const aws = require('aws-sdk');
+const AppError = require('../utils/HandleErrors/AppError');
 
 const storageTypes = {
   local: multer.diskStorage({
@@ -17,7 +18,7 @@ const storageTypes = {
         file.key = `${hash.toString('hex')}-${file.originalname}`;
         cb(null, file.key);
       });
-    }
+    },
   }),
   s3: multerS3({
     s3: new aws.S3(),
@@ -32,15 +33,15 @@ const storageTypes = {
         const filename = `${hash.toString('hex')}-${file.originalname}`;
         cb(null, filename);
       });
-    }
-  })
+    },
+  }),
 };
 
 module.exports = {
   dest: path.resolve(__dirname, '..', '..', 'temp', 'uploads'),
   storage: storageTypes['s3'],
   limits: {
-    fileSize: 2 * 1020 * 1024
+    fileSize: 2 * 1020 * 1024,
   },
   fileFilter: (req, file, cb) => {
     const allowedMimes = ['image/jpeg', 'image/pjpeg', 'image/png'];
@@ -50,5 +51,5 @@ module.exports = {
     } else {
       cb(new AppError('Invalid file type'));
     }
-  }
+  },
 };

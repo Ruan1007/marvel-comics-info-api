@@ -1,33 +1,36 @@
-const mongoose = require('mongoose');
+/**
+ * Arquivo: src/services/image.model.js
+ * Descrição: arquivo responsável pelo model de imagem.
+ */
+const { mongoose, Schema } = require('mongoose');
 const aws = require('aws-sdk');
 
-const Schema = mongoose.Schema;
 const s3 = new aws.S3();
 
 const ImageSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   size: {
     type: String,
-    required: true
+    required: true,
   },
   key: {
     type: String,
-    required: true
+    required: true,
   },
   url: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 ImageSchema.pre('remove', function () {
   return s3
     .deleteObject({
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: this.key
+      Key: this.key,
     })
     .promise()
     .then((response) => {
