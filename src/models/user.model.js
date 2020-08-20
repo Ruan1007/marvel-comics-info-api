@@ -3,10 +3,9 @@
  * Descrição: arquivo responsável pelo model de usuário.
  */
 const mongoose = require('mongoose');
-const { Schema } = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -33,13 +32,13 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.pre('save', async (next) => {
+UserSchema.pre('save', async function (next) {
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
   next();
 });
 
-UserSchema.pre('findOneAndUpdate', async (next) => {
+UserSchema.pre('findOneAndUpdate', async function (next) {
   if (this.getUpdate().newPassword) {
     const hash = await bcrypt.hash(this.getUpdate().newPassword, 10);
     this.getUpdate().password = hash;

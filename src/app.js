@@ -16,6 +16,7 @@ const auth = require('./routes/auth');
 const image = require('./routes/image');
 const user = require('./routes/user');
 const comic = require('./routes/comic');
+const character = require('./routes/character');
 
 app.use(cors());
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use('/auth', auth);
 app.use('/image', image);
 app.use('/user', user);
 app.use('/comic', comic);
+app.use('/character', character);
 
 app.get('/', (req, res) => {
   res.status(200).send({ message: 'Aplicação está rodando.' });

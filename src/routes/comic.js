@@ -1,6 +1,6 @@
 /**
- * Arquivo: src/routes/image.js
- * Descrição: arquivo responsável pela configuração de rota do upload da imagem.
+ * Arquivo: src/routes/comic.js
+ * Descrição: arquivo responsável pela configuração de rota do comic.
  */
 const { Router } = require('express');
 

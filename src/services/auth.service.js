@@ -8,6 +8,7 @@ const User = require('../models/user.model');
 const userService = require('./user.service');
 const emailService = require('./email.service');
 const BadRequestError = require('../utils/HandleErrors/BadRequestError');
+const NotFoundError = require('../utils/HandleErrors/NotFoundError');
 
 const validateRegistration = async (user) => {
   const { name, email, password, confirmPassword } = user;

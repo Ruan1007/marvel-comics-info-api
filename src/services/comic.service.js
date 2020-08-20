@@ -3,7 +3,6 @@
  * Descrição: arquivo responsável pelas regras de negócio do comics.
  */
 const Comic = require('../models/comic.model');
-const { getRatedComicsByUserId } = require('../controllers/comic.controller');
 
 const save = (comic) => {
   return Comic.create({
@@ -21,7 +20,7 @@ const update = (comic) => {
   );
 };
 
-const hasComicFavSaved = async (comic) => {
+const hasRateComicSaved = async (comic) => {
   const comicDB = await Comic.findOne({ userId: comic.userId, url: comic.url });
   if (comicDB) {
     return true;
@@ -31,7 +30,7 @@ const hasComicFavSaved = async (comic) => {
 
 module.exports = {
   async saveOrUpdate(comic) {
-    if (await hasComicFavSaved(comic)) {
+    if (await hasRateComicSaved(comic)) {
       return update(comic);
     }
     return save(comic);
