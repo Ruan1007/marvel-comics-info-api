@@ -8,13 +8,13 @@ const save = (character) => {
   return Character.create({
     userId: character.userId,
     isLiked: character.isLiked,
-    url: character.url,
+    characterId: character.characterId,
   });
 };
 
 const update = (character) => {
   return Character.findOneAndUpdate(
-    { userId: character.userId, url: character.url },
+    { userId: character.userId, characterId: character.characterId },
     character,
     { new: true }
   );
@@ -23,7 +23,7 @@ const update = (character) => {
 const hasRateCharacterSaved = async (character) => {
   const characterDB = await Character.findOne({
     userId: character.userId,
-    url: character.url,
+    characterId: character.characterId,
   });
   if (characterDB) {
     return true;

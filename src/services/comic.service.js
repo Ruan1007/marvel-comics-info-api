@@ -8,20 +8,20 @@ const save = (comic) => {
   return Comic.create({
     userId: comic.userId,
     isLiked: comic.isLiked,
-    url: comic.url,
+    comicId: comic.comicId,
   });
 };
 
 const update = (comic) => {
   return Comic.findOneAndUpdate(
-    { userId: comic.userId, url: comic.url },
+    { userId: comic.userId, comicId: comic.comicId },
     comic,
     { new: true }
   );
 };
 
 const hasRateComicSaved = async (comic) => {
-  const comicDB = await Comic.findOne({ userId: comic.userId, url: comic.url });
+  const comicDB = await Comic.findOne({ userId: comic.userId, comicId: comic.comicId });
   if (comicDB) {
     return true;
   }

@@ -14,7 +14,7 @@ const CharacterSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  url: {
+  characterId: {
     type: String,
     required: true,
   },

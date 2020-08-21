@@ -14,7 +14,7 @@ const ComicSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  url: {
+  comicId: {
     type: String,
     required: true,
   },
