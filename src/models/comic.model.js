@@ -15,7 +15,7 @@ const ComicSchema = new Schema({
     required: true,
   },
   comicId: {
-    type: String,
+    type: Number,
     required: true,
   },
 });

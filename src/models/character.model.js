@@ -15,7 +15,7 @@ const CharacterSchema = new Schema({
     required: true,
   },
   characterId: {
-    type: String,
+    type: Number,
     required: true,
   },
 });
