@@ -8,6 +8,7 @@ const save = (comic) => {
   return Comic.create({
     userId: comic.userId,
     isLiked: comic.isLiked,
+    isFavorite: comic.isFavorite,
     comicId: comic.comicId,
   });
 };
@@ -21,7 +22,10 @@ const update = (comic) => {
 };
 
 const hasRateComicSaved = async (comic) => {
-  const comicDB = await Comic.findOne({ userId: comic.userId, comicId: comic.comicId });
+  const comicDB = await Comic.findOne({
+    userId: comic.userId,
+    comicId: comic.comicId,
+  });
   if (comicDB) {
     return true;
   }

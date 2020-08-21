@@ -12,7 +12,10 @@ const ComicSchema = new Schema({
   },
   isLiked: {
     type: Boolean,
-    required: true,
+  },
+  isFavorite: {
+    type: Boolean,
+    default: false,
   },
   comicId: {
     type: Number,

@@ -12,7 +12,10 @@ const CharacterSchema = new Schema({
   },
   isLiked: {
     type: Boolean,
-    required: true,
+  },
+  isFavorite: {
+    type: Boolean,
+    default: false,
   },
   characterId: {
     type: Number,

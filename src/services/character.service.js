@@ -8,6 +8,7 @@ const save = (character) => {
   return Character.create({
     userId: character.userId,
     isLiked: character.isLiked,
+    isFavorite: character.isFavorite,
     characterId: character.characterId,
   });
 };
