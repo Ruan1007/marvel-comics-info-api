@@ -16,6 +16,12 @@
         "prettier/prettier": "error",
         "consistent-return": "off",
         "no-console": "off",
-        "func-names": "off"
+        "func-names": "off",
+        "prefer-destructuring": "off",
+        "no-underscore-dangle": "off",
+        "no-unused-expressions": "off",
+        "no-restricted-syntax": "off",
+        "guard-for-in": "off",
+        "no-await-in-loop": "off"
     }
 }

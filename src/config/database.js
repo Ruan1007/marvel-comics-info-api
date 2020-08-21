@@ -2,6 +2,7 @@
  * Arquivo: config/database.js
  * Descrição: arquivo responsável pelas configurações de conexão da aplicação: MongoDB
  */
+require('dotenv/config');
 const mongoose = require('mongoose');
 
 const database = mongoose.connect(process.env.DB_URL, {

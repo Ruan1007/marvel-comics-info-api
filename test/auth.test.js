@@ -1,26 +1,90 @@
-const request = require('supertest');
-const app = require('../src/app');
-const User = require('../src/models/user.model');
+const mongoose = require('mongoose');
+
+const dbHandler = require('./db-handle');
+const authService = require('../src/services/auth.service');
+const BadRequestError = require('../src/utils/HandleErrors/BadRequestError');
+
+const userComplete = {
+  name: 'John Doe',
+  email: 'johndoe@email.com',
+  password: '123456',
+  confirmPassword: '123456',
+  birthDate: '04/20/1995',
+};
+
+const userMissingEmail = {
+  name: 'John Doe',
+  password: '123456',
+  confirmPassword: '123456',
+  birthDate: '04/20/1995',
+};
+
+const userMissingName = {
+  email: 'johndoe@email.com',
+  password: '123456',
+  confirmPassword: '123456',
+  birthDate: '04/20/1995',
+};
+
+const userWrongPassword = {
+  name: 'John Doe',
+  email: 'johndoe@email.com',
+  password: '123456',
+  confirmPassword: '654321',
+  birthDate: '04/20/1995',
+};
 
 describe('Auth Model Test', () => {
-
-  test('Deve cadastrar um novo usuário', () => {
-    return request(app)
-      .post('/auth/register')
-      .send({ name: 'John Doe', email: 'johndoe@email.com', password: '123456', confirmPassword: '123456', birthDate: '04/20/1995' })
-      .then(async (res) => {
-        expect(res.status).toBe(201);
-        expect(res.body.user.name).toBe('John Doe');
-        await User.findOneAndDelete({ _id: res.body.user._id });
-      });
+  /**
+   * Connect em um novo in-memory database antes de rodar qualquer teste
+   */
+  beforeAll(async () => {
+    await dbHandler.connect();
   });
 
-  test('Deve retornar o erro de senha incorreta ao tentar salvar um novo usuário', () => {
-    return request(app)
-      .post('/auth/register')
-      .send({ name: 'John Doe', email: 'johndoe@email.com', password: '123456', confirmPassword: '654321', birthDate: '04/20/1995' })
-      .then((res) => {
-        expect(res.status).toBe(400)
-      })
+  /**
+   * Limpa toda a data depois de cada teste
+   */
+  afterEach(async () => {
+    await dbHandler.clearDatabase();
+  });
+
+  /**
+   * Remove e fecha o db e o server.
+   */
+  afterAll(async () => {
+    await dbHandler.closeDatabase();
+  });
+
+  it('Deve cadastrar um novo usuário', async () => {
+    expect(async () => {
+      await authService.signUp(userComplete);
+    }).not.toThrow;
+  });
+
+  it('Não pode criar sem email', async () => {
+    await expect(authService.signUp(userMissingEmail)).rejects.toThrow(
+      mongoose.Error.ValidationError
+    );
+  });
+
+  it('Não pode criar sem nome', async () => {
+    const message = 'Nome não pode ser vazio';
+    try {
+      await authService.signUp(userMissingName);
+    } catch (err) {
+      expect(err.code).toBe(400);
+      expect(err.message).toBe(message);
+    }
+  });
+
+  it('Não pode criar ter senha errada', async () => {
+    const message = 'Senha informada diferente da confirmação de senha';
+    try {
+      await authService.signUp(userWrongPassword);
+    } catch (err) {
+      expect(err.code).toBe(400);
+      expect(err.message).toBe(message);
+    }
   });
 });
