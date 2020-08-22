@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const dbHandler = require('./db-handle');
 const authService = require('../src/services/auth.service');
-const BadRequestError = require('../src/utils/HandleErrors/BadRequestError');
 
 const userComplete = {
   name: 'John Doe',
