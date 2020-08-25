@@ -7,8 +7,8 @@ module.exports = (toEmail, template, params = {}, subject) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'ruan.oliveira.barbosa99@gmail.com',
-      pass: 'inbgxsmasidctoep',
+      user: process.env.USER_EMAIL_SERVICE,
+      pass: process.env.PASS_EMAIL_SERVICE,
     },
   });
 
@@ -26,7 +26,7 @@ module.exports = (toEmail, template, params = {}, subject) => {
   transporter.use('compile', hbs(handleOptions));
 
   const mailOptions = {
-    from: 'ruan.oliveira.barbosa99@gmail.com',
+    from: process.env.USER_EMAIL_SERVICE,
     to: toEmail,
     subject: `Marvel Comics Info - ${subject}`,
     template,
